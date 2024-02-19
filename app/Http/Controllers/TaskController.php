@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
-
-
+use App\Repositories\RepositoryInterface;
 use App\Models\TaskTable;
 use App\Models\register;
 use Faker\Provider\bg_BG\PhoneNumber;
@@ -17,6 +16,12 @@ use Illuminate\Support\Facades\Crypt;
 
 class TaskController extends Controller
 {
+    protected $repo;
+    public function __construct(RepositoryInterface $repo)
+    {
+        $this->repo = $repo;
+    }
+
     public function create()
     {
         $url = url('task/create');
@@ -39,12 +44,11 @@ class TaskController extends Controller
     {
         $search = $request['search'] ?? '';
         if ($search != '') {
-            $table1 = TaskTable::where('Task', 'LIKE', "%$search%")->get();
+            $table1 = $this->repo->getData($search);
         } else {
-            $table1 = TaskTable::all();
+            $table1 = $this->repo->all();
         }
-        $data = compact('table1', 'search');
-        return view("index")->with($data);
+        return view("index")->with(compact('table1', 'search'));
     }
     public function erase($id)
     {

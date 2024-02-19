@@ -106,7 +106,6 @@ Route::group(
         });
         Route::post('/login', [TaskController::class, 'login']);
         Route::get('/logout', [TaskController::class, 'logout']);
-        
     }
 );
 Route::get('noacess', function () {
