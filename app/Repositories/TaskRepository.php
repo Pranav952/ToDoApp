@@ -11,8 +11,12 @@ class TaskRepository implements RepositoryInterface
     {
         return TaskTable::all();
     }
-    public function getData($data)
+    public function searchData($data)
     {
         return TaskTable::where('Task', 'LIKE', "%$data%")->get();
+    }
+    public function getData($id)
+    {
+        return TaskTable::find($id);
     }
 }

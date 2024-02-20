@@ -5,5 +5,6 @@ namespace App\Repositories;
 interface RepositoryInterface
 {
     public function all();
-    public function getData($data);
+    public function searchData($data);
+    public function getData($id);
 }

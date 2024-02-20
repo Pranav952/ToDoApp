@@ -44,7 +44,7 @@ class TaskController extends Controller
     {
         $search = $request['search'] ?? '';
         if ($search != '') {
-            $table1 = $this->repo->getData($search);
+            $table1 = $this->repo->searchData($search);
         } else {
             $table1 = $this->repo->all();
         }
@@ -60,7 +60,7 @@ class TaskController extends Controller
     {
 
 
-        $table1 = TaskTable::find($id);
+        $table1 = $this->repo->getData($id);
         $url = url('task/update') . '/' . $id;
         $title = "Update Task";
         $title1 = "Submit Task";
@@ -69,7 +69,7 @@ class TaskController extends Controller
     }
     public function update($id, Request $request)
     {
-        $table1 = TaskTable::find($id);
+        $table1 = $this->repo->getData($id);
         $table1->Task = $request['Task'];
         $table1->save();
         return redirect('task/alltask');
